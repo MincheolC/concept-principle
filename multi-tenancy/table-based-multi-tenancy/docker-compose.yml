@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  schema-based-multi-tenancy:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "54329:5432"

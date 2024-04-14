@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672" # AMQP 프로토콜 포트
+      - "15672:15672" # 관리용 웹 인터페이스 포트
+    volumes:
+      - "./data:/var/lib/rabbitmq" # 데이터 볼륨 설정
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}

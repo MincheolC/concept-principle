@@ -20,3 +20,14 @@
 
 1. 메세지 지속성 옵션을 탐구하고, 실패 시나리오에서 메세지 복구를 어떻게 처리할지 연구할 것
 2. 로드 테스팅을 수행하여 각 시스템의 성능을 평가하기
+
+### 실행
+
+```sh
+npm run queue:up
+npx ts-node publisher.ts
+npx ts-node subscriber.ts
+
+# 테스트 끝나면 큐 삭제하기
+npm run queue:down
+```

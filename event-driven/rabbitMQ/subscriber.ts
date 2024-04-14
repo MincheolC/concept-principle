@@ -21,7 +21,7 @@ const main = async () => {
 
       /*
        * Acknowledgement
-       * - 메세지 신뢰성 보장, 중복 처리 방지, 메세지 손실 방지
+       * - 메세지 신뢰성 보장, 중복 처리 방지, 메세지 손실 방지를 위해 전달
        */
       channel.ack(msg);
     }

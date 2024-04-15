@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  container-web:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app # 소스 코드 변경사항을 컨테이너에 실시간으로 반영하기 위해 호스트의 현재 디렉토리를 컨테이너 /app 디렉토리에 마운트
+    environment:
+      NODE_ENV: development

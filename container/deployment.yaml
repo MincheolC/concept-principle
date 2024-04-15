@@ -1,0 +1,19 @@
+apiVersion: apps/v1 # 사용할 Kubernetes API 버전을 지정합니다. 'apps/v1'은 일반적으로 Deployment에 사용됩니다.
+kind: Deployment # 이 리소스의 종류를 지정합니다. Deployment는 지정된 수의 Pod 복제본을 유지 관리하는데 사용됩니다.
+metadata:
+  name: node-app # Deployment의 이름을 지정합니다. 이 이름은 클러스터 내에서 유일해야 합니다.
+spec: # Deployment 사양을 정의합니다.
+  replicas: 2 # 이 Deployment가 관리해야 하는 Pod 인스턴스의 수를 지정합니다.
+  selector: # Deployment가 관리할 Pod을 결정하는 데 사용되는 레이블 셀렉터입니다.
+    matchLabels:
+      app: node-app # 셀렉터는 이 레이블을 가진 Pod만을 선택합니다.
+  template: # Pod 템플릿을 정의합니다. 각 Pod는 이 템플릿을 기반으로 생성됩니다.
+    metadata:
+      labels:
+        app: node-app # 생성될 Pod에 할당할 레이블을 지정합니다. 이 레이블은 위의 selector와 일치해야 합니다.
+    spec: # Pod 사양을 정의합니다.
+      containers: # Pod 내에서 실행될 컨테이너 목록입니다.
+        - name: node-app # 첫 번째 컨테이너의 이름을 지정합니다.
+          image: mincheolc/node-app:1.0 # 사용할 컨테이너 이미지를 지정합니다.
+          ports:
+            - containerPort: 8080 # 컨테이너가 리스닝할 포트 번호를 지정합니다. 이 포트를 통해 애플리케이션에 접근할 수 있습니다.

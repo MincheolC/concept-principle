@@ -3,7 +3,8 @@
 import { useContext } from "react";
 import { ThemeProvider, ThemeContext } from "@/stores/context";
 import { defaultTheme } from "@/styles/themes";
-import Button from "@/components/Button";
+import { Button } from "@/components/Button";
+import { CheckBox } from "@/components/Input";
 import PaletteCardList from "@/components/PaletteCardList";
 import { LinearProgressBar, DonutProgressBar, SemiDonutProgressBar } from "@/components/ProgressBar";
 
@@ -22,8 +23,14 @@ export default function Home() {
           </span>
           👋
         </div>
-        <section className="flex h-1/2">
-          <PaletteCardList />
+        <section className="flex">
+          <div className="flex flex-col gap-16">
+            <PaletteCardList />
+            <div className="flex gap-12">
+              <CheckBox label="Remember Me" />
+              <Button label="Button CTA" />
+            </div>
+          </div>
           <div className="mx-20"></div>
           <div className="flex flex-col justify-center items-center gap-8">
             <LinearProgressBar initialProgress={80} />
@@ -31,9 +38,7 @@ export default function Home() {
             <SemiDonutProgressBar progress={30} size={150} fontSize={24} />
           </div>
         </section>
-        <section>
-          <Button label="Button CTA" />
-        </section>
+        <section></section>
       </main>
     </ThemeProvider>
   );

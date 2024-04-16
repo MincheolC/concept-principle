@@ -26,7 +26,7 @@ export default function Home() {
           <PaletteCardList />
           <div className="mx-20"></div>
           <div className="flex flex-col justify-center items-center gap-8">
-            <LinearProgressBar progress={80} />
+            <LinearProgressBar initialProgress={80} />
             <DonutProgressBar progress={65} size={150} fontSize={24} />
             <SemiDonutProgressBar progress={30} size={150} fontSize={24} />
           </div>

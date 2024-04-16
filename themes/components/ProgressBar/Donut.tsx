@@ -37,7 +37,17 @@ export default function DonutProgressBar({
       />
       <text
         x={size / 2}
-        y={size / 2}
+        y={size / 2 - 13}
+        fill={themeColors.black} // 텍스트 색상 설정
+        fontSize={12} // 폰트 크기 설정
+        textAnchor="middle" // 텍스트를 가운데 정렬하기 위함
+        alignmentBaseline="central" // 세로 방향에서 가운데 정렬하기 위함
+      >
+        Active users
+      </text>
+      <text
+        x={size / 2}
+        y={size / 2 + 10}
         fill={themeColors.black} // 텍스트 색상 설정
         fontSize={fontSize} // 폰트 크기 설정
         textAnchor="middle" // 텍스트를 가운데 정렬하기 위함

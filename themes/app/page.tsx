@@ -3,7 +3,7 @@
 import { useContext } from "react";
 import { ThemeProvider, ThemeContext } from "@/stores/context";
 import { defaultTheme } from "@/styles/themes";
-import { Button } from "@/components/Button";
+import { Button, RadioButton } from "@/components/Button";
 import { CheckBox } from "@/components/Input";
 import PaletteCardList from "@/components/PaletteCardList";
 import { LinearProgressBar, DonutProgressBar, SemiDonutProgressBar } from "@/components/ProgressBar";
@@ -26,8 +26,12 @@ export default function Home() {
         <section className="flex">
           <div className="flex flex-col gap-16">
             <PaletteCardList />
-            <div className="flex gap-12">
-              <CheckBox label="Remember Me" />
+            <div className="flex items-center gap-12">
+              <div className="flex flex-col space-y-4">
+                <CheckBox label="Remember Me" />
+                <CheckBox label="I Agree" />
+              </div>
+              <RadioButton options={["Option 1", "Option 2", "Option 3"]} />
               <Button label="Button CTA" />
             </div>
           </div>

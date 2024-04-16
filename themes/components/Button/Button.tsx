@@ -23,7 +23,7 @@ export default function Button({ label, ...props }: ButtonProps) {
   const themeColors = themeContext.colors;
 
   return (
-    <StyledButton theme={themeColors} className="px-6 py-3 rounded-md shadow-lg" {...props}>
+    <StyledButton theme={themeColors} className="px-4 py-3 h-12 rounded-md shadow-lg" {...props}>
       {label}
     </StyledButton>
   );

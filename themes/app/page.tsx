@@ -7,6 +7,7 @@ import { Button, RadioButton } from "@/components/Button";
 import { CheckBox } from "@/components/Input";
 import PaletteCardList from "@/components/PaletteCardList";
 import { LinearProgressBar, DonutProgressBar, SemiDonutProgressBar } from "@/components/ProgressBar";
+import { RocketLaunchIcon, PaperAirplaneIcon } from "@heroicons/react/24/solid";
 
 export default function Home() {
   const themeContext = useContext(ThemeContext);
@@ -26,13 +27,15 @@ export default function Home() {
         <section className="flex">
           <div className="flex flex-col gap-16">
             <PaletteCardList />
-            <div className="flex items-center gap-12">
+            <div className="flex items-center gap-10">
               <div className="flex flex-col space-y-4">
                 <CheckBox label="Remember Me" />
                 <CheckBox label="I Agree" />
               </div>
               <RadioButton options={["Option 1", "Option 2", "Option 3"]} />
               <Button label="Button CTA" />
+              <Button label="Button CTA" HeroIcon={RocketLaunchIcon} />
+              <Button label="Button CTA" HeroIcon={PaperAirplaneIcon} iconPosition="right" />
             </div>
           </div>
           <div className="mx-20"></div>

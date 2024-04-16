@@ -6,7 +6,7 @@ import _ from "lodash";
 
 function PaletteCard({ name, color }: { name: string; color: string }) {
   return (
-    <div className="flex flex-col rounded-lg shadow-lg border-[0.5px] text-slate-400 text-sm transition-transform duration-300 ease-in-out hover:animate-shake max-h-24">
+    <div className="flex flex-col rounded-lg shadow-lg border-[0.5px] text-slate-400 text-sm transition-transform duration-300 ease-in-out hover:animate-shake max-h-24 bg-white">
       <div className="rounded-t-lg h-12" style={{ backgroundColor: color }}></div>
       <div className="px-4 pt-3">{name}</div>
       <div className="rounded-b-lg px-4 pb-3">{color}</div>

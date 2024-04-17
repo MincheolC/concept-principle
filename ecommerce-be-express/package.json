@@ -4,6 +4,7 @@
   "description": "이커머스의 핵심 엔티티 중 User, Product, Order를 구현해봅시다.",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon",
     "db:up": "docker-compose up -d && sleep 2 && prisma migrate dev --name init",
     "db:down": "docker-compose down && rm -rf ./prisma/migrations/*"
   },
@@ -11,10 +12,22 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "prisma": "^5.12.1"
+    "@types/lodash": "^4.17.0",
+    "@types/node": "^20.12.7",
+    "nodemon": "^3.1.0",
+    "prisma": "^5.12.1",
+    "ts-node": "^10.9.2"
   },
   "dependencies": {
+    "@apollo/server": "^4.10.3",
+    "@graphql-tools/load-files": "^7.0.0",
+    "@graphql-tools/schema": "^10.0.3",
     "@prisma/adapter-pg": "^5.12.1",
-    "@prisma/client": "^5.12.1"
+    "@prisma/client": "^5.12.1",
+    "date-fns-tz": "^3.1.3",
+    "express": "^4.19.2",
+    "graphql": "^16.8.1",
+    "lodash": "^4.17.21",
+    "winston": "^3.13.0"
   }
 }

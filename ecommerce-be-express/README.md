@@ -10,6 +10,7 @@
 - Node.js
 - Prisma (with PostgreSQL)
 - Express
+- GraphQL.js (with ApolloServer)
 
 ### 데이터
 

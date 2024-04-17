@@ -1,0 +1,20 @@
+{
+  "name": "ecommerce-be-express",
+  "version": "1.0.0",
+  "description": "이커머스의 핵심 엔티티 중 User, Product, Order를 구현해봅시다.",
+  "main": "index.js",
+  "scripts": {
+    "db:up": "docker-compose up -d && sleep 2 && prisma migrate dev --name init",
+    "db:down": "docker-compose down && rm -rf ./prisma/migrations/*"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prisma": "^5.12.1"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^5.12.1",
+    "@prisma/client": "^5.12.1"
+  }
+}

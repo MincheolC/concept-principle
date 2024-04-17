@@ -19,11 +19,13 @@
 - Product (100만 ~ 1000만 상품)
 - ProductOption (상품 하나 당 3개의 옵션)
 - Order
+- OrderProduct
 
 #### 엔티티 간의 관계
 
 - `user:order = 1:n`
-- `order:product_option = 1:n`
+- `order:order_product = 1:n`
+- `order_product:product_option = 1:1`
 - `product:product_option = 1:n`
 
 ### API

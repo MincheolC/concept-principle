@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  orders    Order[]
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@map("users")
+}
+
+model Product {
+  id             Int             @id @default(autoincrement())
+  name           String
+  description    String?
+  price          Float
+  productOptions ProductOption[]
+  createdAt      DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt      DateTime        @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@map("products")
+}
+
+model ProductOption {
+  id           Int            @id @default(autoincrement())
+  productId    Int            @map("product_id")
+  product      Product        @relation(fields: [productId], references: [id])
+  name         String
+  price        Float
+  OrderProduct OrderProduct[]
+  createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt    DateTime       @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@map("product_options")
+}
+
+model Order {
+  id           Int            @id @default(autoincrement())
+  userId       Int            @map("user_id")
+  user         User           @relation(fields: [userId], references: [id])
+  totalPrice   Float          @map("total_price")
+  OrderProduct OrderProduct[]
+  createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt    DateTime       @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@map("orders")
+}
+
+model OrderProduct {
+  id              Int           @id @default(autoincrement())
+  orderId         Int           @map("order_id")
+  order           Order         @relation(fields: [orderId], references: [id])
+  productOptionId Int           @map("product_option_id")
+  productOption   ProductOption @relation(fields: [productOptionId], references: [id])
+  price           Float
+  quantity        Int
+  totalPrice      Float         @map("total_price")
+  createdAt       DateTime      @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt       DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@map("order_products")
+}

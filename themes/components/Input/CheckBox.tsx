@@ -3,7 +3,6 @@
 import { useContext, useState } from "react";
 import { ThemeContext } from "@/stores/context";
 import styled from "styled-components";
-import { Theme } from "@/types";
 
 interface CheckboxProps {
   label: string;
@@ -11,7 +10,6 @@ interface CheckboxProps {
 
 interface CheckboxStyleProps {
   checked: boolean;
-  xTheme: Theme;
 }
 
 interface CheckIconProps {
@@ -20,8 +18,8 @@ interface CheckIconProps {
 }
 
 const StyledCheckBox = styled.div<CheckboxStyleProps>`
-  border: 2px solid ${(props) => (props.checked ? props.xTheme.colors.primary : "#ddd")};
-  background-color: ${(props) => (props.checked ? props.xTheme.colors.primary : props.xTheme.colors.white)};
+  border: 2px solid ${(props) => (props.checked ? props.theme.colors.primary : "#ddd")};
+  background-color: ${(props) => (props.checked ? props.theme.colors.primary : props.theme.colors.white)};
 `;
 
 const CheckIcon: React.FC<CheckIconProps> = ({ size = 24, color = "#FFFFFF" }) => {
@@ -53,7 +51,7 @@ export default function CheckBox({ label }: CheckboxProps) {
       <StyledCheckBox
         className={`w-6 h-6 p-1 flex justify-center items-center mr-2 border-2 rounded-md`}
         checked={isChecked}
-        xTheme={themeContext}
+        theme={themeContext}
       >
         {isChecked && <CheckIcon />}
       </StyledCheckBox>

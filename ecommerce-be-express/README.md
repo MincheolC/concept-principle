@@ -48,6 +48,10 @@ RESTful API와 GraphQL API를 동시에 지원해야 합니다.
 
 - order 생성 및 조회에 대한 E2E 테스트를 작성합니다.
 
+### API 명세
+
+- Swagger로 RESTful API 문서 작성
+
 ### 추가적인 서버 요구사항
 
 - IP WhiteList 관리

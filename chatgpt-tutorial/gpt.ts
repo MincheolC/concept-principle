@@ -121,7 +121,7 @@ export async function requestChatCompletionStreaming(
   prompts: IPrompt[],
   previousChatCompletionDatas: IChatCompletionData[]
 ): Promise<IChatCompletionData[]> {
-  const messages = createMessages(previousChatCompletionDatas);
+  let messages = createMessages(previousChatCompletionDatas);
   const chatCompletionDatas: IChatCompletionData[] = [];
 
   let orderNumber = 1;
@@ -131,6 +131,7 @@ export async function requestChatCompletionStreaming(
       const response = await chatCompletionStreaming(params);
       if (response) {
         chatCompletionDatas.push({ orderNumber, ...response });
+        messages = messages.concat(response.messages);
         orderNumber += 1;
       }
     } catch (e) {

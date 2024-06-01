@@ -6,7 +6,7 @@ import promptSet from "./prompt_sets/v1.0.0.json" assert { type: "json" };
 
 async function runBrainstormingHelper(
   promptSet: IPromptSet,
-  previousChatCompletionDatas: IChatCompletionData[]
+  previousChatCompletionData?: IChatCompletionData
 ): Promise<IChatCompletionData[]> {
   const GROUP_NAME = "brainstormingHelper";
   const gptModel = promptSet.model;
@@ -14,7 +14,7 @@ async function runBrainstormingHelper(
   const chatCompletionDatas = await requestChatCompletionStreaming(
     gptModel,
     brainstormingHelperPrompts,
-    previousChatCompletionDatas
+    previousChatCompletionData
   );
 
   return chatCompletionDatas.map((v) => ({
@@ -25,7 +25,7 @@ async function runBrainstormingHelper(
 
 async function runIntrosectionGenerator(
   promptSet: IPromptSet,
-  previousChatCompletionDatas: IChatCompletionData[]
+  previousChatCompletionData?: IChatCompletionData
 ): Promise<IChatCompletionData[]> {
   const GROUP_NAME = "introsectionGenerator";
   const gptModel = promptSet.model;
@@ -33,7 +33,7 @@ async function runIntrosectionGenerator(
   const chatCompletionDatas = await requestChatCompletionStreaming(
     gptModel,
     introsectionGeneratorPrompts,
-    previousChatCompletionDatas
+    previousChatCompletionData
   );
 
   return chatCompletionDatas.map((v) => ({
@@ -44,7 +44,7 @@ async function runIntrosectionGenerator(
 
 async function runDraftGenerator(
   promptSet: IPromptSet,
-  previousChatCompletionDatas: IChatCompletionData[]
+  previousChatCompletionData?: IChatCompletionData
 ): Promise<IChatCompletionData[]> {
   const GROUP_NAME = "draftGenerator";
   const gptModel = promptSet.model;
@@ -52,7 +52,7 @@ async function runDraftGenerator(
   const chatCompletionDatas = await requestChatCompletionStreaming(
     gptModel,
     introsectionGeneratorPrompts,
-    previousChatCompletionDatas
+    previousChatCompletionData
   );
 
   return chatCompletionDatas.map((v) => ({
@@ -62,15 +62,16 @@ async function runDraftGenerator(
 }
 
 async function main() {
-  const brainstormingHelperResult = await runBrainstormingHelper(promptSet as IPromptSet, []);
+  const brainstormingHelperResult = await runBrainstormingHelper(promptSet as IPromptSet);
+
+  let previousChatCompletionData = brainstormingHelperResult.at(-1);
   const introsectionGeneratorResult = await runIntrosectionGenerator(
     promptSet as IPromptSet,
-    brainstormingHelperResult
+    previousChatCompletionData
   );
-  const draftGeneratorResult = await runDraftGenerator(promptSet as IPromptSet, [
-    ...brainstormingHelperResult,
-    ...introsectionGeneratorResult,
-  ]);
+
+  previousChatCompletionData = introsectionGeneratorResult.at(-1);
+  const draftGeneratorResult = await runDraftGenerator(promptSet as IPromptSet, previousChatCompletionData);
 
   console.log(JSON.stringify(brainstormingHelperResult));
 }

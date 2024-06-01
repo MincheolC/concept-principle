@@ -31,10 +31,11 @@ export interface IMessageUnit {
 
 export type Messages = IMessageUnit[];
 
+// ChatCompletion API 1번 호출 단위
 export interface IChatCompletionData {
   key?: string;
   orderNumber?: number;
-  messages: IMessageUnit[];
+  messages: IMessageUnit[]; // GPT API option용 message
   usage: {
     promptTokens: number;
     completionTokens: number;
@@ -83,10 +84,7 @@ async function chatCompletionStreaming(
     if (chunk.usage) {
       result = {
         messages: [
-          {
-            role: option.messages.at(-1)?.role,
-            content: option.messages.at(-1)?.content,
-          },
+          ...option.messages,
           {
             role: "assistant",
             content: chunks.join(""),
@@ -104,11 +102,6 @@ async function chatCompletionStreaming(
   return result;
 }
 
-export function createMessages(chatCompletionDatas: IChatCompletionData[]): Messages {
-  const sorted = _.sortBy(chatCompletionDatas, ["orderNumber"]);
-  return sorted.map(({ messages }) => messages).flat();
-}
-
 /**
  * 주저진 Prompt들을 순회하면서
  * @param model
@@ -119,19 +112,20 @@ export function createMessages(chatCompletionDatas: IChatCompletionData[]): Mess
 export async function requestChatCompletionStreaming(
   model: GPTModel,
   prompts: IPrompt[],
-  previousChatCompletionDatas: IChatCompletionData[]
+  previousChatCompletionData?: IChatCompletionData
 ): Promise<IChatCompletionData[]> {
-  let messages = createMessages(previousChatCompletionDatas);
+  const initialMessages = previousChatCompletionData?.messages || [];
   const chatCompletionDatas: IChatCompletionData[] = [];
 
   let orderNumber = 1;
+  let messages = initialMessages;
   for (const prompt of prompts) {
     const params = createChatCompletionStreamingParams(model, prompt, messages);
     try {
       const response = await chatCompletionStreaming(params);
       if (response) {
         chatCompletionDatas.push({ orderNumber, ...response });
-        messages = messages.concat(response.messages);
+        messages = response.messages;
         orderNumber += 1;
       }
     } catch (e) {

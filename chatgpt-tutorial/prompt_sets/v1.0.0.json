@@ -35,13 +35,13 @@
         "id": "S.P_004",
         "role": "system",
         "temperature": 0.8,
-        "content": "Repeat after me: Third prompt!"
+        "content": "Repeat after me: Fifth prompt!"
       },
       {
         "id": "S.P_005",
         "role": "system",
         "temperature": 1,
-        "content": "Repeat after me: Fourth prompt!"
+        "content": "Repeat after me: Sixth prompt!"
       }
     ]
   }

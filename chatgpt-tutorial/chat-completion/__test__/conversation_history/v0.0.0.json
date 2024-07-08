@@ -1,0 +1,44 @@
+{
+  "promptVersion": "v0.0.0",
+  "model": "gpt-3.5-turbo",
+  "history": [
+    {
+      "group": "brainstromingHelper",
+      "orderNumber": 1,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Repeat after me: First prompt!"
+        },
+        {
+          "role": "assistant",
+          "content": "First prompt!"
+        }
+      ],
+      "usage": {
+        "promptTokens": 14,
+        "completionTokens": 3,
+        "totalTokens": 17
+      }
+    },
+    {
+      "group": "brainstromingHelper",
+      "orderNumber": 2,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Repeat after me: Second prompt!"
+        },
+        {
+          "role": "assistant",
+          "content": "Second prompt!"
+        }
+      ],
+      "usage": {
+        "promptTokens": 32,
+        "completionTokens": 3,
+        "totalTokens": 35
+      }
+    }
+  ]
+}

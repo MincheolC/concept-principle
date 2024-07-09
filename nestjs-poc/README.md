@@ -137,3 +137,10 @@ npm install pg
 npx prisma init
 npx prisma migrate dev --name init
 ```
+
+### Prisma 모듈 및 서비스 생성
+
+```sh
+nest g mo prisma
+nest g s prisma
+```

@@ -130,3 +130,10 @@ npm install --save-dev prisma
 npm install @nestjs/config @nestjs/jwt @nestjs/passport passport passport-jwt
 npm install pg
 ```
+
+### Prisma 설정
+
+```sh
+npx prisma init
+npx prisma migrate dev --name init
+```

@@ -150,3 +150,9 @@ nest g s prisma
 ```sh
 nest g resource users
 ```
+
+### 로깅 및 성능 측정 (interceptor)
+
+```sh
+nest g itc logging
+```

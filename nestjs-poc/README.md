@@ -158,3 +158,9 @@ nest g resource users
 ```sh
 nest g itc logging
 ```
+
+### 데이터 검증 (pipe)
+
+```sh
+nest g pi validation
+```

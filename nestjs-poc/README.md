@@ -144,3 +144,9 @@ npx prisma migrate dev --name init
 nest g mo prisma
 nest g s prisma
 ```
+
+### User 리소스 생성
+
+```sh
+nest g resource users
+```

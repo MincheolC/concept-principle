@@ -153,6 +153,8 @@ nest g resource users
 
 ### 로깅 및 성능 측정 (interceptor)
 
+[👉 Interceptor 개념 이해하기](./docs/interceptor.md)
+
 ```sh
 nest g itc logging
 ```

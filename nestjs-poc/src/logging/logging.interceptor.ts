@@ -13,11 +13,18 @@ import { tap } from 'rxjs/operators';
  * - Javascript에서 데이터 스트림과 이벤트 기반 프로그램을 작성할 때 강력한 기능을 제공함.
  */
 
+/**
+ * Inteceptor 설정 가능 범위
+ * - 전역 범위
+ * - 컨트롤러 범위
+ * - 메서드 범위
+ */
+
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     /**
-     * 응답 잔처리
+     * 응답 전처리
      */
     const now = Date.now();
     return (

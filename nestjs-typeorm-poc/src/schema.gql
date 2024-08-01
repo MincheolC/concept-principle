@@ -1,0 +1,33 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateUserInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  removeUser(id: Int!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+}
+
+type Query {
+  user(id: Int!): User!
+}
+
+input UpdateUserInput {
+  email: String
+  id: Int!
+  name: String
+  password: String
+}
+
+type User {
+  email: String!
+  id: Int!
+  name: String!
+  password: String!
+}

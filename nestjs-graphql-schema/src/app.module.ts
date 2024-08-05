@@ -6,6 +6,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UserModule } from './user/user.module';
+import { PostModule } from './post/post.module';
+import { ScalarsModule } from './common/scalars/scalars.module';
+import { APP_FILTER } from '@nestjs/core';
+import { GqlExceptionFilter } from './common/filters/gql-exception/gql-exception.filter';
 
 @Module({
   imports: [
@@ -27,11 +31,29 @@ import { UserModule } from './user/user.module';
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      debug: process.env.NODE_ENV !== 'production',
+      playground: process.env.NODE_ENV !== 'production',
       typePaths: ['./**/*.graphql'],
+      formatError: (error) => {
+        const graphQLFormattedError = {
+          message: error.message,
+          locations: error.locations,
+          path: error.path,
+          extensions: {
+            code: error.extensions.code,
+          },
+        };
+        return graphQLFormattedError;
+      },
     }),
     UserModule,
+    PostModule,
+    ScalarsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    { provide: APP_FILTER, useClass: GqlExceptionFilter },
+  ],
 })
 export class AppModule {}

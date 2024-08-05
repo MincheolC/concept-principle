@@ -1,26 +1,23 @@
 import {
-  Entity,
   Column,
+  Entity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  ManyToOne,
 } from 'typeorm';
-import { Post } from '../../post/entities/post.entity';
+import { User } from '../../user/entities/user.entity';
 
 @Entity()
-export class User {
+export class Post {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  name: string;
+  title: string;
 
   @Column()
-  email: string;
-
-  @Column()
-  password: string;
+  content: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
@@ -28,6 +25,9 @@ export class User {
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 
-  @OneToMany(() => Post, (post) => post.user)
-  posts: Post[];
+  @ManyToOne(() => User, (user) => user.posts, {
+    onDelete: 'CASCADE',
+    nullable: false,
+  })
+  user: User;
 }

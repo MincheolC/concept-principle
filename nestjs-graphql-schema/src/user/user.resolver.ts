@@ -1,34 +1,55 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
+import { PostService } from '../post/post.service';
 
 @Resolver('User')
 export class UserResolver {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly postService: PostService,
+  ) {}
 
   @Mutation('createUser')
-  create(@Args('createUserInput') createUserInput: CreateUserInput) {
-    return this.userService.create(createUserInput);
+  async create(@Args('createUserInput') createUserInput: CreateUserInput) {
+    return await this.userService.create(createUserInput);
   }
 
   @Query('users')
-  findAll() {
-    return this.userService.findAll();
+  async findAll() {
+    return await this.userService.findAll();
   }
 
   @Query('user')
-  findOne(@Args('id') id: number) {
-    return this.userService.findOne(id);
+  async findOne(@Args('id') id: number) {
+    const user = await this.userService.findOne(id);
+    if (user) {
+      user.posts = user.posts || []; // posts가 null일 경우 빈 배열로 설정
+    }
+    return user;
   }
 
   @Mutation('updateUser')
-  update(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-    return this.userService.update(updateUserInput.id, updateUserInput);
+  async update(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
+    return await this.userService.update(updateUserInput.id, updateUserInput);
   }
 
   @Mutation('removeUser')
-  remove(@Args('id') id: number) {
-    return this.userService.remove(id);
+  async remove(@Args('id') id: number) {
+    return await this.userService.remove(id);
+  }
+
+  @ResolveField('posts')
+  async getPosts(@Parent() user) {
+    console.log('getPosts');
+    return await this.postService.findPostsByUserId(user.id);
   }
 }

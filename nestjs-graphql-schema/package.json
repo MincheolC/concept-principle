@@ -30,6 +30,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/typeorm": "^10.0.2",
     "apollo-server-errors": "^3.3.1",
+    "dataloader": "^2.2.2",
     "graphql": "^16.9.0",
     "graphql-scalars": "^1.23.0",
     "mysql2": "^3.11.0",

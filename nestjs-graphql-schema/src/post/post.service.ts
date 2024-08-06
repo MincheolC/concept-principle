@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, Repository, In } from 'typeorm';
 import { CreatePostInput } from './dto/create-post.input';
 import { UpdatePostInput } from './dto/update-post.input';
 import { Post } from './entities/post.entity';
@@ -37,12 +37,14 @@ export class PostService {
     return posts || [];
   }
 
-  async findPostsByUserId(userId: number) {
-    return await this.postRepository.find({ where: { user: { id: userId } } });
+  async findPostsByUserIds(userIds: number[]) {
+    return await this.postRepository.find({
+      where: { user: { id: In(userIds) } },
+      relations: ['user'],
+    });
   }
 
   async findOne(id: number) {
-    console.log('findOne', id);
     return await this.postRepository.findOne({ where: { id } });
   }
 

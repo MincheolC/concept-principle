@@ -5,18 +5,15 @@ import {
   Args,
   ResolveField,
   Parent,
+  Context,
 } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { PostService } from '../post/post.service';
 
 @Resolver('User')
 export class UserResolver {
-  constructor(
-    private readonly userService: UserService,
-    private readonly postService: PostService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
   @Mutation('createUser')
   async create(@Args('createUserInput') createUserInput: CreateUserInput) {
@@ -48,8 +45,7 @@ export class UserResolver {
   }
 
   @ResolveField('posts')
-  async getPosts(@Parent() user) {
-    console.log('getPosts');
-    return await this.postService.findPostsByUserId(user.id);
+  async getPosts(@Parent() user, @Context() context) {
+    return await context.loaders.postLoader.findPostsByUserIds.load(user.id);
   }
 }

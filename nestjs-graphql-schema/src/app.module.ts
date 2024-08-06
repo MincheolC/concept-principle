@@ -10,6 +10,8 @@ import { PostModule } from './post/post.module';
 import { ScalarsModule } from './common/scalars/scalars.module';
 import { APP_FILTER } from '@nestjs/core';
 import { GqlExceptionFilter } from './common/filters/gql-exception/gql-exception.filter';
+import { PostLoaderModule } from './loaders/post-loader/post-loader.module';
+import { PostLoaderService } from './loaders/post-loader/post-loader.service';
 
 @Module({
   imports: [
@@ -29,22 +31,31 @@ import { GqlExceptionFilter } from './common/filters/gql-exception/gql-exception
       }),
       inject: [ConfigService],
     }),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
-      debug: process.env.NODE_ENV !== 'production',
-      playground: process.env.NODE_ENV !== 'production',
-      typePaths: ['./**/*.graphql'],
-      formatError: (error) => {
-        const graphQLFormattedError = {
-          message: error.message,
-          locations: error.locations,
-          path: error.path,
-          extensions: {
-            code: error.extensions.code,
+      imports: [PostLoaderModule],
+      useFactory: async (postLoader: PostLoaderService) => ({
+        debug: process.env.NODE_ENV !== 'production',
+        playground: process.env.NODE_ENV !== 'production',
+        typePaths: ['./**/*.graphql'],
+        formatError: (error) => {
+          const graphQLFormattedError = {
+            message: error.message,
+            locations: error.locations,
+            path: error.path,
+            extensions: {
+              code: error.extensions.code,
+            },
+          };
+          return graphQLFormattedError;
+        },
+        context: () => ({
+          loaders: {
+            postLoader,
           },
-        };
-        return graphQLFormattedError;
-      },
+        }),
+      }),
+      inject: [PostLoaderService],
     }),
     UserModule,
     PostModule,

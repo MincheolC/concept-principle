@@ -1,16 +1,20 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { DataSource, Repository, In } from 'typeorm';
+import { DataSource, Repository, In, QueryRunner } from 'typeorm';
 import { CreatePostInput } from './dto/create-post.input';
 import { UpdatePostInput } from './dto/update-post.input';
 import { Post } from './entities/post.entity';
 import { User } from '../user/entities/user.entity';
+import { PostGptService } from '../post-gpt/post-gpt.service';
 
 @Injectable()
 export class PostService {
   private postRepository: Repository<Post>;
   private userRepository: Repository<User>;
 
-  constructor(private dataSource: DataSource) {
+  constructor(
+    private dataSource: DataSource,
+    private readonly postGptService: PostGptService,
+  ) {
     this.postRepository = dataSource.getRepository(Post);
     this.userRepository = dataSource.getRepository(User);
   }
@@ -24,28 +28,51 @@ export class PostService {
       throw new NotFoundException('User not found');
     }
 
-    const post = await this.postRepository.create({
-      ...createPostInput,
-      user,
-    });
-    return this.postRepository.save(post);
+    const queryRunner: QueryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      const post = await this.postRepository.create({
+        ...createPostInput,
+        user,
+      });
+      await this.postRepository.save(post);
+      await this.postGptService.createUsage(post, 'gpt-4o');
+      await queryRunner.commitTransaction();
+
+      return await this.findOne(post.id);
+    } catch (err) {
+      console.log(err);
+      await queryRunner.rollbackTransaction();
+      throw err;
+    } finally {
+      await queryRunner.release();
+    }
   }
 
   async findAll() {
-    console.log('findAll');
     const posts = await this.postRepository.find();
     return posts || [];
   }
 
   async findPostsByUserIds(userIds: number[]) {
-    return await this.postRepository.find({
+    const posts = await this.postRepository.find({
       where: { user: { id: In(userIds) } },
-      relations: ['user'],
+      relations: ['user', 'postGpts'], // entity에 정의된 field값과 같아야함
     });
+
+    return posts.map((post) => ({
+      ...post,
+      postGpts: post.postGpts || [],
+    }));
   }
 
   async findOne(id: number) {
-    return await this.postRepository.findOne({ where: { id } });
+    return await this.postRepository.findOne({
+      where: { id },
+      relations: ['user', 'postGpts'],
+    });
   }
 
   async update(id: number, updatePostInput: UpdatePostInput) {
@@ -58,7 +85,23 @@ export class PostService {
       throw new Error('Post not found');
     }
 
-    return this.postRepository.save(post);
+    const queryRunner: QueryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      await this.postRepository.save(post);
+      await this.postGptService.createUsage(post, 'gpt-4o');
+      await queryRunner.commitTransaction();
+
+      return await this.findOne(post.id);
+    } catch (err) {
+      console.log(err);
+      await queryRunner.rollbackTransaction();
+      throw err;
+    } finally {
+      await queryRunner.release();
+    }
   }
 
   async remove(id: number) {

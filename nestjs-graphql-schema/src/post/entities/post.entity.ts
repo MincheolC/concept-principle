@@ -5,8 +5,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
+import { PostGpt } from '../../post-gpt/entities/post-gpt.entity';
 
 @Entity()
 export class Post {
@@ -30,4 +32,7 @@ export class Post {
     nullable: false,
   })
   user: User;
+
+  @OneToMany(() => PostGpt, (postGpt) => postGpt.post)
+  postGpts: PostGpt[];
 }

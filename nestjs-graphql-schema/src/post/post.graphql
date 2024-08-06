@@ -3,8 +3,15 @@ type Post {
   user: User!
   title: String!
   content: String!
+  postGpts: [PostGpt]!
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type PostGpt {
+  post: Post!
+  gptModel: String!
+  createdAt: DateTime!
 }
 
 input CreatePostInput {

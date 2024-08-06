@@ -12,6 +12,7 @@ import { APP_FILTER } from '@nestjs/core';
 import { GqlExceptionFilter } from './common/filters/gql-exception/gql-exception.filter';
 import { PostLoaderModule } from './loaders/post-loader/post-loader.module';
 import { PostLoaderService } from './loaders/post-loader/post-loader.service';
+import { PostGptModule } from './post-gpt/post-gpt.module';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { PostLoaderService } from './loaders/post-loader/post-loader.service';
     UserModule,
     PostModule,
     ScalarsModule,
+    PostGptModule,
   ],
   controllers: [AppController],
   providers: [

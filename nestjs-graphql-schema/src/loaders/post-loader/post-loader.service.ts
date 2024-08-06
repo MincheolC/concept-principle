@@ -18,5 +18,6 @@ export class PostLoaderService {
       }, {});
       return userIds.map((userId) => postsMap[userId] || []);
     },
+    { cache: false },
   );
 }

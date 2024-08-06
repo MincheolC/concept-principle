@@ -5,10 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  Index,
 } from 'typeorm';
 import { Post } from '../../post/entities/post.entity';
 
 @Entity()
+@Index(['gptModel'])
 export class PostGpt {
   @PrimaryGeneratedColumn()
   id: number;

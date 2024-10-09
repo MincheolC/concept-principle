@@ -59,6 +59,9 @@ importers:
       typeorm:
         specifier: ^0.3.20
         version: 0.3.20(mysql2@3.11.0)(ts-node@10.9.2(@types/node@20.14.13)(typescript@5.5.4))
+      typeorm-naming-strategies:
+        specifier: ^4.1.0
+        version: 4.1.0(typeorm@0.3.20(mysql2@3.11.0)(ts-node@10.9.2(@types/node@20.14.13)(typescript@5.5.4)))
     devDependencies:
       '@nestjs/cli':
         specifier: ^10.0.0
@@ -3057,6 +3060,11 @@ packages:
 
   typedarray@0.0.6:
     resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==}
+
+  typeorm-naming-strategies@4.1.0:
+    resolution: {integrity: sha512-vPekJXzZOTZrdDvTl1YoM+w+sUIfQHG4kZTpbFYoTsufyv9NIBRe4Q+PdzhEAFA2std3D9LZHEb1EjE9zhRpiQ==}
+    peerDependencies:
+      typeorm: ^0.2.0 || ^0.3.0
 
   typeorm@0.3.20:
     resolution: {integrity: sha512-sJ0T08dV5eoZroaq9uPKBoNcGslHBR4E4y+EBHs//SiGbblGe7IeduP/IH4ddCcj0qp3PHwDwGnuvqEAnKlq/Q==}
@@ -6704,6 +6712,10 @@ snapshots:
       mime-types: 2.1.35
 
   typedarray@0.0.6: {}
+
+  typeorm-naming-strategies@4.1.0(typeorm@0.3.20(mysql2@3.11.0)(ts-node@10.9.2(@types/node@20.14.13)(typescript@5.5.4))):
+    dependencies:
+      typeorm: 0.3.20(mysql2@3.11.0)(ts-node@10.9.2(@types/node@20.14.13)(typescript@5.5.4))
 
   typeorm@0.3.20(mysql2@3.11.0)(ts-node@10.9.2(@types/node@20.14.13)(typescript@5.5.4)):
     dependencies:

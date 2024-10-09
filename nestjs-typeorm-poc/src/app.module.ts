@@ -7,6 +7,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { join } from 'path';
+import { TimeModule } from './time/time.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { join } from 'path';
     }),
     DatabaseModule,
     UserModule,
+    TimeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -78,5 +78,8 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "graphql": {
+    "schema": "src/**/*.graphql"
   }
 }

@@ -12,7 +12,7 @@ export class PostResolver {
     return await this.postService.create(createPostInput);
   }
 
-  @Query('post')
+  @Query('posts')
   async findAll() {
     return await this.postService.findAll();
   }

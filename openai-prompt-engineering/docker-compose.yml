@@ -1,0 +1,12 @@
+services:
+  database:
+    image: mysql
+    container_name: openai-prompt-engineering
+    ports:
+      - 33069:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_TZ: 'UTC'
+    volumes:
+      - ./mysql_data:/var/lib/mysql

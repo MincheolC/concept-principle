@@ -3,7 +3,10 @@ import { Theme } from "@/types";
 export const defaultTheme: Theme = {
   colors: {
     primary: "#4f46e5",
+    // primary: "#FFD1E3",
+    // primary: "#5BBCFF",
     secondary: "#EC4899",
+    // secondary: "#FFFAB7",
     background: "#FFFFFF",
     text: "#FFFFFF",
     icon: "#FFFFFF",

@@ -1,17 +1,33 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ThemeProvider, ThemeContext } from "@/stores/context";
 import { defaultTheme } from "@/styles/themes";
 import { Button, RadioButton } from "@/components/Button";
 import { CheckBox } from "@/components/Input";
 import PaletteCardList from "@/components/PaletteCardList";
 import { LinearProgressBar, DonutProgressBar, SemiDonutProgressBar } from "@/components/ProgressBar";
+// import GradientPicker from "@/components/GradientPicker";
+import GradientPicker from "@/components/GradientPicker";
 import { RocketLaunchIcon, PaperAirplaneIcon } from "@heroicons/react/24/solid";
 
 export default function Home() {
   const themeContext = useContext(ThemeContext);
   const themeColors = themeContext.colors;
+
+  useEffect(() => {
+    async function fn() {
+      const response = await fetch("https://jdbdoteg08.execute-api.ap-northeast-2.amazonaws.com/api/writings", {
+        method: "POST",
+        body: JSON.stringify({
+          roughMemo: "hello world",
+        }),
+      });
+      console.log(response);
+    }
+
+    fn();
+  }, []);
 
   return (
     <ThemeProvider value={defaultTheme}>
@@ -45,7 +61,16 @@ export default function Home() {
             <SemiDonutProgressBar progress={30} size={150} fontSize={24} />
           </div>
         </section>
-        <section></section>
+        <section>
+          {/* <GradientPicker
+            initialGradient={[
+              { color: "#4f46e5", position: "0%" },
+              { color: "#FFFFFF", position: "100%" },
+            ]}
+            initialTilt={50}
+          /> */}
+          <GradientPicker />
+        </section>
       </main>
     </ThemeProvider>
   );
